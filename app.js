@@ -32,7 +32,7 @@ let reset = () => {
     ['_','_','_'],
     ['_','_','_']
   ];
-  winStatus.innerHTML = 'Winner: ';
+  winStatus.innerHTML = '';
   turnDisplay.innerHTML = `Current Turn: ${currentTurn}`;
   xWinsCount.innerHTML = `X Wins: ${xWins}`
   oWinsCount.innerHTML = `O Wins: ${oWins}`
@@ -53,14 +53,14 @@ let checkWin = () => {
     if (rowWin || colWin || majorDiagWin || minorDiagWin) {
       winner = true
       lastWinner = currentTurn
-      winStatus.innerHTML = `Winner: ${currentTurn}`
+      winStatus.innerText = `${currentTurn} Wins`
       currentTurn === 'X' ? xWins++ : oWins++
       xWinsCount.innerHTML = `X Wins: ${xWins}`
       oWinsCount.innerHTML = `O Wins: ${oWins}`
       return
     }
     if (moves === 9) {
-      winStatus.innerHTML = `Winner: TIE`
+      winStatus.innerText = `TIE`
       return
     }
   }

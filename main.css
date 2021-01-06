@@ -1,0 +1,46 @@
+body {
+  background-color: rgb(39, 39, 39);
+  font-family: 'Courier New', Courier, monospace;
+  color: aliceblue;
+  padding: 50px;
+}
+
+.wrapper {
+  margin: 0% 25%;
+}
+
+button {
+  transition: 1s;
+  cursor: pointer;
+  margin: 20px;
+  width: 120px;
+  height: 40px;
+  background-color: rgb(59, 59, 59);
+  font-weight: 600;
+  color: rgb(95, 95, 95);
+}
+button:hover {
+  background-color: rgb(216, 75, 71);
+  font-weight: 600;
+  color: white;
+}
+
+th {
+  transition: 0.5s;
+  cursor: pointer;
+  margin: 0px;
+  border: 1px solid black;
+  height: 80px;
+  font-size: 40px;
+  background-color: rgb(63, 63, 63);
+}
+th:hover {
+  background-color: rgb(74, 197, 156);
+}
+
+#winner {
+  text-align: center;
+  font-size: 55px;
+  font-weight: 100;
+  color: rgb(74, 197, 156);
+}
