@@ -16,15 +16,16 @@ let htmlBoard = [
   [s6,s7,s8]
 ];
 
-let board = [
-  ['_','_','_'],
-  ['_','_','_'],
-  ['_','_','_']
-];
+let board, currentTurn, winner
 
-let currentTurn = 'X';
-
-let init = () => {
+let reset = () => {
+  currentTurn = 'X';
+  winner = false;
+  board = [
+    ['_','_','_'],
+    ['_','_','_'],
+    ['_','_','_']
+  ];
   winStatus.innerHTML = 'Winner: '
   turnDisplay.innerHTML = `Current Turn: ${currentTurn}`
   for (let i = 0; i < htmlBoard.length; i++) {
@@ -33,7 +34,7 @@ let init = () => {
     }
   }
 }
-init()
+reset()
 
 let checkBoard = () => {
   for (let i = 0; i < board.length; i++) {
@@ -42,14 +43,14 @@ let checkBoard = () => {
     let majorDiagWin = board[1][1] !== '_' && board[0][2] === board[1][1] && board[1][1] === board[2][0]
     let minorDiagWin = board[1][1] !== '_' && board[0][0] === board[1][1] && board[1][1] === board[2][2]
     if (rowWin || colWin || majorDiagWin || minorDiagWin) {
-      console.log('WINNER')
+      winner = true
       winStatus.innerHTML = `Winner: ${currentTurn}`
     }
   }
 }
 
 let setBoard = (row,col) => {
-  if (htmlBoard[row][col].innerHTML !== ('X' || 'O')) {
+  if (htmlBoard[row][col].innerHTML !== ('X' || 'O') && !winner) {
     board[row][col] = currentTurn;
     htmlBoard[row][col].innerHTML = board[row][col];
     checkBoard()
