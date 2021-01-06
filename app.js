@@ -16,11 +16,12 @@ let htmlBoard = [
   [s6,s7,s8]
 ];
 
-let board, currentTurn, winner
+let board, currentTurn, winner, moves
 
 let reset = () => {
   currentTurn = 'X';
   winner = false;
+  moves = 0
   board = [
     ['_','_','_'],
     ['_','_','_'],
@@ -36,7 +37,7 @@ let reset = () => {
 }
 reset()
 
-let checkBoard = () => {
+let checkWin = () => {
   for (let i = 0; i < board.length; i++) {
     let rowWin = board[i][1] !== '_' && board[i][0] === board[i][1] && board[i][1] === board[i][2]
     let colWin = board[1][i] !== '_' && board[0][i] === board[1][i] && board[1][i] === board[2][i]
@@ -46,14 +47,19 @@ let checkBoard = () => {
       winner = true
       winStatus.innerHTML = `Winner: ${currentTurn}`
     }
+    if (moves === 9) {
+      winStatus.innerHTML = `Winner: TIE`
+    }
   }
 }
 
 let setBoard = (row,col) => {
   if (htmlBoard[row][col].innerHTML !== ('X' || 'O') && !winner) {
+    moves++
+    console.log(moves)
     board[row][col] = currentTurn;
     htmlBoard[row][col].innerHTML = board[row][col];
-    checkBoard()
+    checkWin()
     currentTurn === 'X' ? currentTurn = 'O' : currentTurn = 'X';
     turnDisplay.innerHTML = `Current Turn: ${currentTurn}`;
   }
