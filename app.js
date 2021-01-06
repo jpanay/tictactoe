@@ -9,6 +9,8 @@ let s7 = document.querySelector('#s7');
 let s8 = document.querySelector('#s8');
 let turnDisplay = document.querySelector('#turn');
 let winStatus = document.querySelector('#winner');
+let xWinsCount = document.querySelector('#x-wins');
+let oWinsCount = document.querySelector('#o-wins');
 
 let htmlBoard = [
   [s0,s1,s2],
@@ -18,6 +20,8 @@ let htmlBoard = [
 
 let board, currentTurn, winner, moves;
 let lastWinner = 'X'
+let xWins = 0
+let oWins = 0
 
 let reset = () => {
   currentTurn = lastWinner;
@@ -30,6 +34,8 @@ let reset = () => {
   ];
   winStatus.innerHTML = 'Winner: ';
   turnDisplay.innerHTML = `Current Turn: ${currentTurn}`;
+  xWinsCount.innerHTML = `X Wins: ${xWins}`
+  oWinsCount.innerHTML = `O Wins: ${oWins}`
   for (let i = 0; i < htmlBoard.length; i++) {
     for (let u = 0; u < htmlBoard[i].length; u++) {
       htmlBoard[i][u].innerHTML = board[i][u];
@@ -48,9 +54,14 @@ let checkWin = () => {
       winner = true
       lastWinner = currentTurn
       winStatus.innerHTML = `Winner: ${currentTurn}`
+      currentTurn === 'X' ? xWins++ : oWins++
+      xWinsCount.innerHTML = `X Wins: ${xWins}`
+      oWinsCount.innerHTML = `O Wins: ${oWins}`
+      return
     }
     if (moves === 9) {
       winStatus.innerHTML = `Winner: TIE`
+      return
     }
   }
 }
