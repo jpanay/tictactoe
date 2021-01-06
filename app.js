@@ -16,19 +16,20 @@ let htmlBoard = [
   [s6,s7,s8]
 ];
 
-let board, currentTurn, winner, moves
+let board, currentTurn, winner, moves;
+let lastWinner = 'X'
 
 let reset = () => {
-  currentTurn = 'X';
+  currentTurn = lastWinner;
   winner = false;
-  moves = 0
+  moves = 0;
   board = [
     ['_','_','_'],
     ['_','_','_'],
     ['_','_','_']
   ];
-  winStatus.innerHTML = 'Winner: '
-  turnDisplay.innerHTML = `Current Turn: ${currentTurn}`
+  winStatus.innerHTML = 'Winner: ';
+  turnDisplay.innerHTML = `Current Turn: ${currentTurn}`;
   for (let i = 0; i < htmlBoard.length; i++) {
     for (let u = 0; u < htmlBoard[i].length; u++) {
       htmlBoard[i][u].innerHTML = board[i][u];
@@ -45,6 +46,7 @@ let checkWin = () => {
     let minorDiagWin = board[1][1] !== '_' && board[0][0] === board[1][1] && board[1][1] === board[2][2]
     if (rowWin || colWin || majorDiagWin || minorDiagWin) {
       winner = true
+      lastWinner = currentTurn
       winStatus.innerHTML = `Winner: ${currentTurn}`
     }
     if (moves === 9) {
