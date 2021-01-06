@@ -8,6 +8,7 @@ let s6 = document.querySelector('#s6');
 let s7 = document.querySelector('#s7');
 let s8 = document.querySelector('#s8');
 let turnDisplay = document.querySelector('#turn');
+let winStatus = document.querySelector('#winner');
 
 let htmlBoard = [
   [s0,s1,s2],
@@ -24,6 +25,7 @@ let board = [
 let currentTurn = 'X';
 
 let init = () => {
+  winStatus.innerHTML = 'Winner: '
   turnDisplay.innerHTML = `Current Turn: ${currentTurn}`
   for (let i = 0; i < htmlBoard.length; i++) {
     for (let u = 0; u < htmlBoard[i].length; u++) {
@@ -33,17 +35,27 @@ let init = () => {
 }
 init()
 
+let checkBoard = () => {
+  for (let i = 0; i < board.length; i++) {
+    let rowWin = board[i][1] !== '_' && board[i][0] === board[i][1] && board[i][1] === board[i][2]
+    let colWin = board[1][i] !== '_' && board[0][i] === board[1][i] && board[1][i] === board[2][i]
+    let majorDiagWin = board[1][1] !== '_' && board[0][2] === board[1][1] && board[1][1] === board[2][0]
+    let minorDiagWin = board[1][1] !== '_' && board[0][0] === board[1][1] && board[1][1] === board[2][2]
+    if (rowWin || colWin || majorDiagWin || minorDiagWin) {
+      console.log('WINNER')
+      winStatus.innerHTML = `Winner: ${currentTurn}`
+    }
+  }
+}
 
 let setBoard = (row,col) => {
-  let boardPos = board[row][col];
-  boardPos = currentTurn;
-  let htmlPos = htmlBoard[row][col];
-  if (htmlPos.innerHTML !== ('X' || 'O')) {
-    htmlPos.innerHTML = boardPos;
+  if (htmlBoard[row][col].innerHTML !== ('X' || 'O')) {
+    board[row][col] = currentTurn;
+    htmlBoard[row][col].innerHTML = board[row][col];
+    checkBoard()
     currentTurn === 'X' ? currentTurn = 'O' : currentTurn = 'X';
     turnDisplay.innerHTML = `Current Turn: ${currentTurn}`;
   }
-
 }
 
 s0.addEventListener("click", () => {setBoard(0,0)});
