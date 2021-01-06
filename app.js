@@ -11,6 +11,8 @@ let turnDisplay = document.querySelector('#turn');
 let winStatus = document.querySelector('#winner');
 let xWinsCount = document.querySelector('#x-wins');
 let oWinsCount = document.querySelector('#o-wins');
+let p1Name = document.querySelector('#p1-name');
+let p2Name = document.querySelector('#p2-name');
 
 let htmlBoard = [
   [s0,s1,s2],
@@ -22,6 +24,8 @@ let board, currentTurn, winner, moves;
 let lastWinner = 'X'
 let xWins = 0
 let oWins = 0
+let p1 = 'Player 1'
+let p2 = 'Player 2'
 
 let reset = () => {
   currentTurn = lastWinner;
@@ -34,8 +38,8 @@ let reset = () => {
   ];
   winStatus.innerHTML = '';
   turnDisplay.innerHTML = `Current Turn: ${currentTurn}`;
-  xWinsCount.innerHTML = `X Wins: ${xWins}`
-  oWinsCount.innerHTML = `O Wins: ${oWins}`
+  xWinsCount.innerHTML = `${p1} (X) Wins: ${xWins}`
+  oWinsCount.innerHTML = `${p2} (O) Wins: ${oWins}`
   for (let i = 0; i < htmlBoard.length; i++) {
     for (let u = 0; u < htmlBoard[i].length; u++) {
       htmlBoard[i][u].innerHTML = board[i][u];
@@ -53,10 +57,15 @@ let checkWin = () => {
     if (rowWin || colWin || majorDiagWin || minorDiagWin) {
       winner = true
       lastWinner = currentTurn
-      winStatus.innerText = `${currentTurn} Wins`
-      currentTurn === 'X' ? xWins++ : oWins++
-      xWinsCount.innerHTML = `X Wins: ${xWins}`
-      oWinsCount.innerHTML = `O Wins: ${oWins}`
+      if(currentTurn === 'X') {
+        xWins++
+        winStatus.innerText = `${p1} (${currentTurn}) Wins`
+      } else {
+        oWins++
+        winStatus.innerText = `${p2} (${currentTurn}) Wins`
+      }
+      xWinsCount.innerHTML = `${p1} (X) Wins: ${xWins}`
+      oWinsCount.innerHTML = `${p2} (O) Wins: ${oWins}`
       return
     }
     if (moves === 9) {
@@ -76,6 +85,17 @@ let setBoard = (row,col) => {
     currentTurn === 'X' ? currentTurn = 'O' : currentTurn = 'X';
     turnDisplay.innerHTML = `Current Turn: ${currentTurn}`;
   }
+}
+
+let saveNames = () => {
+  p1 = p1Name.value || p1 || 'Player 1'
+  p2 = p2Name.value || p2 || 'Player 2'
+  p1Name.placeholder = p1 + ' (X)' || 'Player X'
+  p2Name.placeholder = p2 + ' (O)'|| 'Player O'
+  xWinsCount.innerHTML = `${p1} (X) Wins: ${xWins}`
+  oWinsCount.innerHTML = `${p2} (O) Wins: ${oWins}`
+  p1Name.value = ''
+  p2Name.value = ''
 }
 
 s0.addEventListener("click", () => {setBoard(0,0)});

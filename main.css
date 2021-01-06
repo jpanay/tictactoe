@@ -12,15 +12,29 @@ body {
 button {
   transition: 1s;
   cursor: pointer;
-  margin: 20px;
+  margin: 15px;
   width: 120px;
-  height: 40px;
+  height: 30px;
   background-color: rgb(59, 59, 59);
   font-weight: 600;
   color: rgb(95, 95, 95);
+  text-align: center;
 }
-button:hover {
+#reset {
+  width: 50%;
+  margin: 0% 25%;
+  margin-top: 15px;
+  height: 40px;
+}
+
+
+#reset:hover {
   background-color: rgb(216, 75, 71);
+  font-weight: 600;
+  color: white;
+}
+#save:hover {
+  background-color: rgb(74, 197, 156);
   font-weight: 600;
   color: white;
 }
@@ -40,7 +54,26 @@ th:hover {
 
 #winner {
   text-align: center;
-  font-size: 55px;
+  font-size: 35px;
   font-weight: 100;
   color: rgb(74, 197, 156);
+}
+
+input {
+ width: 30%;
+ height: 25px;
+ background-color: rgb(83, 83, 83);
+ color: aliceblue;
+}
+
+#save {
+  width: 29%;
+  margin: 0px;
+}
+
+.name-conatiner {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin: 0px;
 }
