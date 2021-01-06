@@ -27,7 +27,6 @@ button {
   height: 40px;
 }
 
-
 #reset:hover {
   background-color: rgb(216, 75, 71);
   font-weight: 600;
@@ -60,20 +59,24 @@ th:hover {
 }
 
 input {
- width: 30%;
+ width: 35%;
  height: 25px;
+ margin: 0px;
  background-color: rgb(83, 83, 83);
  color: aliceblue;
+ margin: 0% 1%;
 }
 
 #save {
-  width: 29%;
+  width: 30%;
   margin: 0px;
+  margin: 0% 2%;
+  height: 33px;
 }
 
-.name-conatiner {
+.name-container {
   display: flex;
   flex-direction: row;
   width: 100%;
-  margin: 0px;
+  margin: 5px 0px;
 }
