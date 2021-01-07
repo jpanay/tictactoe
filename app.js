@@ -13,6 +13,9 @@ let xWinsCount = document.querySelector('#x-wins');
 let oWinsCount = document.querySelector('#o-wins');
 let p1Name = document.querySelector('#p1-name');
 let p2Name = document.querySelector('#p2-name');
+let boardDiv = document.querySelector('#board');
+let th = document.querySelectorAll('th')
+let timeDiv = document.querySelector('#time')
 
 let htmlBoard = [
   [s0,s1,s2],
@@ -28,6 +31,13 @@ let p1 = 'Player 1'
 let p2 = 'Player 2'
 
 let reset = () => {
+  winStatus.style.display = 'none'
+  for (let element of th) {
+    element.style.transform = `rotate(0deg)`
+  }
+  boardDiv.style.transform = `rotate(0deg)`
+  boardDiv.style.transform = `skewY(0deg)`
+  boardDiv.style.transform = `skewX(0deg)`
   currentTurn = lastWinner;
   winner = false;
   moves = 0;
@@ -66,14 +76,30 @@ let checkWin = () => {
       }
       xWinsCount.innerHTML = `${p1} (X) Wins: ${xWins}`
       oWinsCount.innerHTML = `${p2} (O) Wins: ${oWins}`
-      return
+      return true
     }
     if (moves === 9) {
       winStatus.innerText = `TIE`
-      return
+      return true
     }
   }
+  return false
 }
+
+
+let rotate = () => {
+  let randomNum = (min,max) => {
+    return Math.random() * (max - min) + min;
+  }
+  boardDiv.style.transform = `rotate(${randomNum(10,360)}deg)`
+  // boardDiv.style.transform = `skewY(${randomNum(-60,60)}deg)`
+  // boardDiv.style.transform = `skewX(${randomNum(-60,60)}deg)`
+  for (let element of th) {
+    element.style.transform = `rotate(${randomNum(-1000,1000)}deg)`
+  }
+}
+
+
 
 let setBoard = (row,col) => {
   if (htmlBoard[row][col].innerHTML !== ('X' || 'O') && !winner) {
@@ -81,10 +107,44 @@ let setBoard = (row,col) => {
     console.log(moves)
     board[row][col] = currentTurn;
     htmlBoard[row][col].innerHTML = board[row][col];
-    checkWin()
+    checkTime()
     currentTurn === 'X' ? currentTurn = 'O' : currentTurn = 'X';
     turnDisplay.innerHTML = `Current Turn: ${currentTurn}`;
+    rotate()
   }
+}
+
+let interval = null
+let checkTime = () => {
+  let time = 3
+  if (interval) {
+    timeDiv.innerHTML = time
+    clearInterval(interval)
+  }
+  interval = setInterval(() => {
+    time -= 0.1
+    time = (Math.round(time * 100) / 100).toFixed(2);
+    timeDiv.innerHTML = time
+    // let x =
+    if(time == 0.00) {
+      time = 3
+      timeDiv.innerHTML = time
+      clearInterval(interval)
+      winStatus.style.display = 'block'
+      if(currentTurn === 'X') {
+        oWins++
+        winStatus.innerText = `${p2} (O) Wins`
+        lastWinner = 'O'
+      } else {
+        xWins++
+        winStatus.innerText = `${p1} (X) Wins`
+        lastWinner = 'X'
+      }
+      xWinsCount.innerHTML = `${p1} (X) Wins: ${xWins}`
+      oWinsCount.innerHTML = `${p2} (O) Wins: ${oWins}`
+      setTimeout(reset,1000)
+    }
+  }, 100)
 }
 
 let saveNames = () => {
